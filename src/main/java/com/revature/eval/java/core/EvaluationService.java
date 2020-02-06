@@ -100,26 +100,26 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			HashMap<Double, Boolean> h = new HashMap<>();
-			h.put(sideOne, true);
-			h.put(sideTwo, true);
-			h.put(sideThree, true);
+			HashSet<Double> h = new HashSet<>();
+			h.add(sideOne);
+			h.add(sideTwo);
+			h.add(sideThree);
 			return h.size() == 1;
 		}
 
 		public boolean isIsosceles() {
-			HashMap<Double, Boolean> h = new HashMap<>();
-			h.put(sideOne, true);
-			h.put(sideTwo, true);
-			h.put(sideThree, true);
+			HashSet<Double> h = new HashSet<>();
+			h.add(sideOne);
+			h.add(sideTwo);
+			h.add(sideThree);
 			return h.size() <= 2;
 		}
 
 		public boolean isScalene() {
-			HashMap<Double, Boolean> h = new HashMap<>();
-			h.put(sideOne, true);
-			h.put(sideTwo, true);
-			h.put(sideThree, true);
+			HashSet<Double> h = new HashSet<>();
+			h.add(sideOne);
+			h.add(sideTwo);
+			h.add(sideThree);
 			return h.size() == 3;
 		}
 
