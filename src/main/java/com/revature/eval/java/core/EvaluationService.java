@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +15,11 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String reverse(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		char[] reversed = new char[string.length()];
+		for(int i=0; i< string.length(); ++i) {
+			reversed[string.length() - 1 - i] = string.charAt(i);
+		}
+		return new String(reversed);
 	}
 
 	/**
@@ -27,8 +31,13 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String[] words;
+		words = phrase.toUpperCase().split("[\\w-]+");
+		String result = "";
+		for(String w: words) {
+			result += String.valueOf(w.charAt(0));
+		}
+		return result;
 	}
 
 	/**
@@ -81,18 +90,27 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			HashMap<Double, Boolean> h = new HashMap<>();
+			h.put(sideOne, true);
+			h.put(sideTwo, true);
+			h.put(sideThree, true);
+			return h.size() == 1;
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			HashMap<Double, Boolean> h = new HashMap<>();
+			h.put(sideOne, true);
+			h.put(sideTwo, true);
+			h.put(sideThree, true);
+			return h.size() <= 2;
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			HashMap<Double, Boolean> h = new HashMap<>();
+			h.put(sideOne, true);
+			h.put(sideTwo, true);
+			h.put(sideThree, true);
+			return h.size() == 3;
 		}
 
 	}
@@ -113,8 +131,27 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		HashMap<Character, Integer> pointValues = new HashMap<>();
+		Character[] one = {'A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'};// = 1
+		for(Character c: one) { pointValues.put(c, 1); }
+		Character[] two = {'D', 'G'}; // = 2; 
+		for(Character c: two) { pointValues.put(c, 2); }
+		Character[] three = {'B', 'C', 'M', 'P'};// = 3; 
+		for(Character c: three) { pointValues.put(c, 3); }
+		Character[] four = {'F', 'H', 'V', 'W', 'Y'};// = 4; 
+		for(Character c: four) { pointValues.put(c, 4); }
+		Character[] five = {'K'};// = 5; 
+		for(Character c: five) { pointValues.put(c, 5); }
+		Character[] eight = {'J', 'X'};// = 8; 
+		for(Character c: eight) { pointValues.put(c, 8); }
+		Character[] ten = {'Q', 'Z'};// = 10;
+		for(Character c: ten) { pointValues.put(c, 10); }
+		
+		int points = 0;
+		for(char c: string.toUpperCase().toCharArray()) {
+			points += pointValues.get(c);
+		}
+		return points;
 	}
 
 	/**
