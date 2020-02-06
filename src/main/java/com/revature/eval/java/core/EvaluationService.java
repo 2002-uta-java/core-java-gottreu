@@ -201,11 +201,13 @@ public class EvaluationService {
 		if(m.matches()) {
 			throw new IllegalArgumentException("number contains alphabetic characters");
 		}
+		// regex is non-digits except space, hyphen, period, and parens
 		Pattern symbols = Pattern.compile(".*[\\D&&[^\\s-.\\(\\)]].*");
 		m = symbols.matcher(string);
 		if(m.matches()) {
 			throw new IllegalArgumentException("number contains invalid non-numeric characters");
 		}
+		// general xxx xxx xxxx pattern with option country code, hyphens, spaces, and parens
 		Pattern phoneNumber = Pattern.compile("\\A\\s*(?:\\+?1)?\\(?([2-9]\\d\\d)\\)?[\\s.-]+?([2-9]\\d{2})[\\s.-]+?(\\d{4})\\s*\\Z");
 		m = phoneNumber.matcher(string);
 		if(!m.matches()) {
@@ -359,7 +361,6 @@ public class EvaluationService {
 			int digit = input % 10;
 			sum += (int)Math.pow(digit, exponent);
 			input /= 10;
-			//++exponent;
 		}
 		return sum == original;
 	}
@@ -428,7 +429,7 @@ public class EvaluationService {
 		public String rotate(String string) {
 			char[] letters = string.toCharArray();
 			for(int i=0; i < letters.length; ++i) {
-				char c = letters[i]; // letters[i] is too verbose
+				char c = letters[i];
 				boolean lowerCase = false;
 				if(c >= 'a' && c <= 'z') {
 					lowerCase = true;
@@ -437,10 +438,10 @@ public class EvaluationService {
 				if(c >= 'A' && c <= 'Z') {
 					c = (char) (c + key);
 					if(c > 'Z') {
-						c -= 26;
+						c -= 26; // poor man's modulo
 					}
 					if(lowerCase) {
-						c += 32;
+						c += 32; // convert back to lower case
 					}
 					letters[i] = c;
 				}
