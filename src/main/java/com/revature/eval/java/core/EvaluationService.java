@@ -26,7 +26,7 @@ public class EvaluationService {
 	 */
 	public String reverse(String string) {
 		char[] reversed = new char[string.length()];
-		for(int i=0; i< string.length(); ++i) {
+		for (int i = 0; i < string.length(); ++i) {
 			reversed[string.length() - 1 - i] = string.charAt(i);
 		}
 		return new String(reversed);
@@ -44,7 +44,7 @@ public class EvaluationService {
 		String[] words;
 		words = phrase.toUpperCase().split("[\\W-]+");
 		String result = "";
-		for(String w: words) {
+		for (String w : words) {
 			result += String.valueOf(w.charAt(0));
 		}
 		return result;
@@ -142,23 +142,37 @@ public class EvaluationService {
 	 */
 	public int getScrabbleScore(String string) {
 		HashMap<Character, Integer> pointValues = new HashMap<>();
-		Character[] one = {'A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'};// = 1
-		for(Character c: one) { pointValues.put(c, 1); }
-		Character[] two = {'D', 'G'}; // = 2; 
-		for(Character c: two) { pointValues.put(c, 2); }
-		Character[] three = {'B', 'C', 'M', 'P'};// = 3; 
-		for(Character c: three) { pointValues.put(c, 3); }
-		Character[] four = {'F', 'H', 'V', 'W', 'Y'};// = 4; 
-		for(Character c: four) { pointValues.put(c, 4); }
-		Character[] five = {'K'};// = 5; 
-		for(Character c: five) { pointValues.put(c, 5); }
-		Character[] eight = {'J', 'X'};// = 8; 
-		for(Character c: eight) { pointValues.put(c, 8); }
-		Character[] ten = {'Q', 'Z'};// = 10;
-		for(Character c: ten) { pointValues.put(c, 10); }
-		
+		Character[] one = { 'A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T' };// = 1
+		for (Character c : one) {
+			pointValues.put(c, 1);
+		}
+		Character[] two = { 'D', 'G' }; // = 2;
+		for (Character c : two) {
+			pointValues.put(c, 2);
+		}
+		Character[] three = { 'B', 'C', 'M', 'P' };// = 3;
+		for (Character c : three) {
+			pointValues.put(c, 3);
+		}
+		Character[] four = { 'F', 'H', 'V', 'W', 'Y' };// = 4;
+		for (Character c : four) {
+			pointValues.put(c, 4);
+		}
+		Character[] five = { 'K' };// = 5;
+		for (Character c : five) {
+			pointValues.put(c, 5);
+		}
+		Character[] eight = { 'J', 'X' };// = 8;
+		for (Character c : eight) {
+			pointValues.put(c, 8);
+		}
+		Character[] ten = { 'Q', 'Z' };// = 10;
+		for (Character c : ten) {
+			pointValues.put(c, 10);
+		}
+
 		int points = 0;
-		for(char c: string.toUpperCase().toCharArray()) {
+		for (char c : string.toUpperCase().toCharArray()) {
 			points += pointValues.get(c);
 		}
 		return points;
@@ -198,23 +212,25 @@ public class EvaluationService {
 	public String cleanPhoneNumber(String string) {
 		Pattern alpha = Pattern.compile(".*[a-zA-Z].*");
 		Matcher m = alpha.matcher(string);
-		if(m.matches()) {
+		if (m.matches()) {
 			throw new IllegalArgumentException("number contains alphabetic characters");
 		}
 		// regex is non-digits except space, hyphen, period, and parens
 		Pattern symbols = Pattern.compile(".*[\\D&&[^\\s-.\\(\\)]].*");
 		m = symbols.matcher(string);
-		if(m.matches()) {
+		if (m.matches()) {
 			throw new IllegalArgumentException("number contains invalid non-numeric characters");
 		}
-		// general xxx xxx xxxx pattern with option country code, hyphens, spaces, and parens
-		Pattern phoneNumber = Pattern.compile("\\A\\s*(?:\\+?1)?\\(?([2-9]\\d\\d)\\)?[\\s.-]+?([2-9]\\d{2})[\\s.-]+?(\\d{4})\\s*\\Z");
+		// general xxx xxx xxxx pattern with option country code, hyphens, spaces, and
+		// parens
+		Pattern phoneNumber = Pattern
+				.compile("\\A\\s*(?:\\+?1)?\\(?([2-9]\\d\\d)\\)?[\\s.-]+?([2-9]\\d{2})[\\s.-]+?(\\d{4})\\s*\\Z");
 		m = phoneNumber.matcher(string);
-		if(!m.matches()) {
+		if (!m.matches()) {
 			throw new IllegalArgumentException();
 		}
 		return m.replaceAll("$1$2$3");
-		//return null;
+		// return null;
 	}
 
 	/**
@@ -230,8 +246,8 @@ public class EvaluationService {
 		String[] words;
 		words = string.split("[\\W]+");
 		Map<String, Integer> counts = new HashMap<>();
-		for(String w: words) {
-			if(!counts.containsKey(w)) {
+		for (String w : words) {
+			if (!counts.containsKey(w)) {
 				counts.put(w, 0);
 			}
 			counts.put(w, counts.get(w) + 1);
@@ -276,29 +292,33 @@ public class EvaluationService {
 	 */
 	static class BinarySearch<T extends Comparable<T>> {
 		private List<T> sortedList;
-		
+
 		private int find(T t, int min, int max) {
-			int mid = (min + max)/2;
+			int mid = (min + max) / 2;
 			T midValue = sortedList.get(mid);
 			int c = t.compareTo(midValue);
-			if(c == 0) {
+			if (c == 0) {
 				return mid;
 			}
-			if(min == max) {
+			if (min == max) {
 				return -1;
 			}
-			if(c < 0) {
-				if(mid == min) { return -1; }
+			if (c < 0) {
+				if (mid == min) {
+					return -1;
+				}
 				return find(t, min, mid - 1);
 			} else {
-				if(mid == max) { return -1; }
+				if (mid == max) {
+					return -1;
+				}
 				return find(t, mid + 1, max);
 			}
 		}
 
 		public int indexOf(T t) {
 			int size = sortedList.size();
-			return find(t, 0, size-1);
+			return find(t, 0, size - 1);
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -356,10 +376,10 @@ public class EvaluationService {
 	public boolean isArmstrongNumber(int input) {
 		int original = input;
 		int sum = 0;
-		int exponent = (int)Math.ceil(Math.log10(input));
-		while(input > 0) {
+		int exponent = (int) Math.ceil(Math.log10(input));
+		while (input > 0) {
 			int digit = input % 10;
-			sum += (int)Math.pow(digit, exponent);
+			sum += (int) Math.pow(digit, exponent);
 			input /= 10;
 		}
 		return sum == original;
@@ -378,11 +398,11 @@ public class EvaluationService {
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		long possibleFactor = 2;
 		List<Long> factors = new ArrayList<>();
-		if(l < 2) {
+		if (l < 2) {
 			throw new IllegalArgumentException("parameter l must be greater than 1");
 		}
-		while(l > 1) {
-			if(l % possibleFactor == 0) {
+		while (l > 1) {
+			if (l % possibleFactor == 0) {
 				l /= possibleFactor;
 				factors.add(possibleFactor);
 			} else {
@@ -428,19 +448,19 @@ public class EvaluationService {
 
 		public String rotate(String string) {
 			char[] letters = string.toCharArray();
-			for(int i=0; i < letters.length; ++i) {
+			for (int i = 0; i < letters.length; ++i) {
 				char c = letters[i];
 				boolean lowerCase = false;
-				if(c >= 'a' && c <= 'z') {
+				if (c >= 'a' && c <= 'z') {
 					lowerCase = true;
 					c -= 32; // convert to upper case
 				}
-				if(c >= 'A' && c <= 'Z') {
+				if (c >= 'A' && c <= 'Z') {
 					c = (char) (c + key);
-					if(c > 'Z') {
+					if (c > 'Z') {
 						c -= 26; // poor man's modulo
 					}
-					if(lowerCase) {
+					if (lowerCase) {
 						c += 32; // convert back to lower case
 					}
 					letters[i] = c;
@@ -464,29 +484,32 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int calculateNthPrime(int i) {
-		if(i < 1) { 
+		if (i < 1) {
 			throw new IllegalArgumentException("i must be positive");
 		}
 		Vector<Integer> primes = new Vector<>();
 		primes.add(2);
 		int possiblePrime = 3;
-		while(primes.size() < i) {
-			if(isPrime(possiblePrime)) {
+		while (primes.size() < i) {
+			if (isPrime(possiblePrime)) {
 				primes.add(possiblePrime);
 			}
 			possiblePrime += 2;
 		}
 		return primes.lastElement();
 	}
-		
+
 	private static boolean isPrime(int n) {
-		/* We're only passing odd numbers to isPrimes, so this first test
-		 * is redundant, but it seems unreasonable to have isPrime return invalid
-		 * results for some even numbers.
+		/*
+		 * We're only passing odd numbers to isPrimes, so this first test is redundant,
+		 * but it seems unreasonable to have isPrime return invalid results for some
+		 * even numbers.
 		 */
-		if( n % 2 == 0) { return false; }
-		for(int i=3; i <= Math.sqrt(n); i+=2) {
-			if(n % i == 0) {
+		if (n % 2 == 0) {
+			return false;
+		}
+		for (int i = 3; i <= Math.sqrt(n); i += 2) {
+			if (n % i == 0) {
 				return false;
 			}
 		}
@@ -528,9 +551,9 @@ public class EvaluationService {
 		public static String encode(String string) {
 			String[] letters = string.toLowerCase().replaceAll("[^a-z\\d]", "").split("");
 			Vector<Character> output = new Vector<>();
-			for(String l: letters ) {
+			for (String l : letters) {
 				char c = l.charAt(0);
-				if(l.matches("\\d")) {
+				if (l.matches("\\d")) {
 					output.add(c);
 				} else {
 					c = (char) ('z' - (c - 'a'));
@@ -538,9 +561,9 @@ public class EvaluationService {
 				}
 			}
 			String result = "";
-			for(int i=1; i <= output.size(); ++i) {
-				result += output.get(i-1);
-				if(i%5 == 0 && i != output.size()) {
+			for (int i = 1; i <= output.size(); ++i) {
+				result += output.get(i - 1);
+				if (i % 5 == 0 && i != output.size()) {
 					result += " ";
 				}
 			}
@@ -556,9 +579,9 @@ public class EvaluationService {
 		public static String decode(String string) {
 			String[] letters = string.toLowerCase().replaceAll("[^a-z\\d]", "").split("");
 			Vector<Character> output = new Vector<>();
-			for(String l: letters ) {
+			for (String l : letters) {
 				char c = l.charAt(0);
-				if(l.matches("\\d")) {
+				if (l.matches("\\d")) {
 					output.add(c);
 				} else {
 					c = (char) ('z' - (c - 'a'));
@@ -566,8 +589,8 @@ public class EvaluationService {
 				}
 			}
 			String result = "";
-			for(int i=1; i <= output.size(); ++i) {
-				result += output.get(i-1);
+			for (int i = 1; i <= output.size(); ++i) {
+				result += output.get(i - 1);
 			}
 			return result;
 		}
@@ -596,16 +619,16 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		if(!string.matches("\\d-?\\d{3}-?\\d{5}-?(\\d|[xX])")) {
+		if (!string.matches("\\d-?\\d{3}-?\\d{5}-?(\\d|[xX])")) {
 			return false;
 		}
 		String[] digits = string.replaceAll("-", "").split("");
-		if(digits[9].matches("[xX]")) {
+		if (digits[9].matches("[xX]")) {
 			digits[9] = "10";
 		}
 		int factor = 10;
 		int sum = 0;
-		for(String d: digits) {
+		for (String d : digits) {
 			sum += factor * Integer.valueOf(d);
 			factor--;
 		}
@@ -627,8 +650,8 @@ public class EvaluationService {
 	 */
 	public boolean isPangram(String string) {
 		HashSet<String> h = new HashSet<>();
-		for(String s: string.toLowerCase().split("")) {
-			if(s.matches("[a-z]")) {
+		for (String s : string.toLowerCase().split("")) {
+			if (s.matches("[a-z]")) {
 				h.add(s);
 			}
 		}
@@ -645,7 +668,7 @@ public class EvaluationService {
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
 		LocalDateTime ldt;
-		if(given.getClass() == LocalDate.class) {
+		if (given.getClass() == LocalDate.class) {
 			LocalDate ld = LocalDate.from(given);
 			ldt = ld.atStartOfDay();
 		} else {
@@ -669,15 +692,15 @@ public class EvaluationService {
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
 		HashSet<Integer> multiples = new HashSet<>();
-		for(int s: set) {
+		for (int s : set) {
 			int m = s;
-			while(m < i) {
+			while (m < i) {
 				multiples.add(m);
 				m += s;
 			}
 		}
 		int sum = 0;
-		for(int m: multiples) {
+		for (int m : multiples) {
 			sum += m;
 		}
 		return sum;
@@ -722,21 +745,21 @@ public class EvaluationService {
 	public boolean isLuhnValid(String string) {
 		boolean everyOther = false;
 		int sum = 0;
-		if(!string.matches("[\\s\\d]+")) {
+		if (!string.matches("[\\s\\d]+")) {
 			return false;
 		}
 		List<String> digits = Arrays.asList(string.replaceAll("\\s", "").split(""));
 		Collections.reverse(digits);
-		for(String s: digits) {
+		for (String s : digits) {
 			int digit = Integer.valueOf(s);
-			if(everyOther) {
+			if (everyOther) {
 				digit *= 2;
-				if(digit > 9) {
+				if (digit > 9) {
 					digit -= 9;
 				}
 			}
 			sum += digit;
-			everyOther = ! everyOther;
+			everyOther = !everyOther;
 		}
 		return (sum % 10) == 0;
 	}
@@ -771,22 +794,22 @@ public class EvaluationService {
 	public int solveWordProblem(String string) {
 		Pattern p = Pattern.compile("What is (-?\\d+) (plus|minus|multiplied by|divided by) (-?\\d+)\\?");
 		Matcher m = p.matcher(string);
-		if(m.matches()) {
+		if (m.matches()) {
 			int a = Integer.valueOf(m.group(1));
 			int b = Integer.valueOf(m.group(3));
 			String op = m.group(2);
-			if(op.equals("plus")) {
-				return a+b;
-			} else if(op.equals("minus")) {
-				return a-b;
-			} else if(op.equals("multiplied by")) {
-				return a*b;
-			} else if(op.equals("divided by")) {
-				return a/b;
+			if (op.equals("plus")) {
+				return a + b;
+			} else if (op.equals("minus")) {
+				return a - b;
+			} else if (op.equals("multiplied by")) {
+				return a * b;
+			} else if (op.equals("divided by")) {
+				return a / b;
 			} else {
 				throw new RuntimeException();
 			}
-		}else {
+		} else {
 			throw new RuntimeException();
 		}
 	}
