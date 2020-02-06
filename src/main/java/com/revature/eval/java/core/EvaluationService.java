@@ -4,6 +4,8 @@ import java.time.temporal.Temporal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EvaluationService {
 
@@ -186,8 +188,23 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		Pattern alpha = Pattern.compile(".*[a-zA-Z].*");
+		Matcher m = alpha.matcher(string);
+		if(m.matches()) {
+			throw new IllegalArgumentException("number contains alphabetic characters");
+		}
+		Pattern symbols = Pattern.compile(".*[\\D&&[^\\s-.\\(\\)]].*");
+		m = symbols.matcher(string);
+		if(m.matches()) {
+			throw new IllegalArgumentException("number contains invalid non-numeric characters");
+		}
+		Pattern phoneNumber = Pattern.compile("\\A\\s*(?:\\+?1)?\\(?([2-9]\\d\\d)\\)?[\\s.-]+?([2-9]\\d{2})[\\s.-]+?(\\d{4})\\s*\\Z");
+		m = phoneNumber.matcher(string);
+		if(!m.matches()) {
+			throw new IllegalArgumentException();
+		}
+		return m.replaceAll("$1$2$3");
+		//return null;
 	}
 
 	/**
