@@ -506,8 +506,25 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			String[] letters = string.toLowerCase().replaceAll("[^a-z\\d]", "").split("");
+			Vector<Character> output = new Vector<>();
+			for(String l: letters ) {
+				char c = l.charAt(0);
+				if(l.matches("\\d")) {
+					output.add(c);
+				} else {
+					c = (char) ('z' - (c - 'a'));
+					output.add(c);
+				}
+			}
+			String result = "";
+			for(int i=1; i <= output.size(); ++i) {
+				result += output.get(i-1);
+				if(i%5 == 0 && i != output.size()) {
+					result += " ";
+				}
+			}
+			return result;
 		}
 
 		/**
@@ -517,8 +534,22 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			String[] letters = string.toLowerCase().replaceAll("[^a-z\\d]", "").split("");
+			Vector<Character> output = new Vector<>();
+			for(String l: letters ) {
+				char c = l.charAt(0);
+				if(l.matches("\\d")) {
+					output.add(c);
+				} else {
+					c = (char) ('z' - (c - 'a'));
+					output.add(c);
+				}
+			}
+			String result = "";
+			for(int i=1; i <= output.size(); ++i) {
+				result += output.get(i-1);
+			}
+			return result;
 		}
 	}
 
