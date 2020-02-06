@@ -537,8 +537,13 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		HashSet<String> h = new HashSet<>();
+		for(String s: string.toLowerCase().split("")) {
+			if(s.matches("[a-z]")) {
+				h.add(s);
+			}
+		}
+		return h.size() == 26;
 	}
 
 	/**
