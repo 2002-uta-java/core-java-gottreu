@@ -217,8 +217,16 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String[] words;
+		words = string.split("[\\W]+");
+		Map<String, Integer> counts = new HashMap<>();
+		for(String w: words) {
+			if(!counts.containsKey(w)) {
+				counts.put(w, 0);
+			}
+			counts.put(w, counts.get(w) + 1);
+		}
+		return counts;
 	}
 
 	/**
