@@ -680,8 +680,26 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		Pattern p = Pattern.compile("What is (-?\\d+) (plus|minus|multiplied by|divided by) (-?\\d+)\\?");
+		Matcher m = p.matcher(string);
+		if(m.matches()) {
+			int a = Integer.valueOf(m.group(1));
+			int b = Integer.valueOf(m.group(3));
+			String op = m.group(2);
+			if(op.equals("plus")) {
+				return a+b;
+			} else if(op.equals("minus")) {
+				return a-b;
+			} else if(op.equals("multiplied by")) {
+				return a*b;
+			} else if(op.equals("divided by")) {
+				return a/b;
+			} else {
+				throw new RuntimeException();
+			}
+		}else {
+			throw new RuntimeException();
+		}
 	}
 
 }
