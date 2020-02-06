@@ -519,8 +519,20 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		if(!string.matches("\\d-?\\d{3}-?\\d{5}-?(\\d|[xX])")) {
+			return false;
+		}
+		String[] digits = string.replaceAll("-", "").split("");
+		if(digits[9].matches("[xX]")) {
+			digits[9] = "10";
+		}
+		int factor = 10;
+		int sum = 0;
+		for(String d: digits) {
+			sum += factor * Integer.valueOf(d);
+			factor--;
+		}
+		return sum % 11 == 0;
 	}
 
 	/**
