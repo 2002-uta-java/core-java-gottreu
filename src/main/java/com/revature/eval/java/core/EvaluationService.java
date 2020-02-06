@@ -329,8 +329,17 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		int original = input;
+		int sum = 0;
+		int exponent = (int)Math.ceil(Math.log10(input));
+		System.out.println("input: " + input + ", exp: " + exponent);
+		while(input > 0) {
+			int digit = input % 10;
+			sum += (int)Math.pow(digit, exponent);
+			input /= 10;
+			//++exponent;
+		}
+		return sum == original;
 	}
 
 	/**
