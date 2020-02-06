@@ -305,8 +305,8 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String result = string.replaceAll("\\b([aeiou]\\w+)\\b", "$1ay");
+		return result.replaceAll("\\b(qu|[a-z&&[^aeiou]]+)([aeiou]+\\w+)\\b", "$2$1ay");
 	}
 
 	/**
