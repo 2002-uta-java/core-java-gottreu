@@ -34,7 +34,7 @@ public class EvaluationService {
 	 */
 	public String acronym(String phrase) {
 		String[] words;
-		words = phrase.toUpperCase().split("[\\w-]+");
+		words = phrase.toUpperCase().split("[\\W-]+");
 		String result = "";
 		for(String w: words) {
 			result += String.valueOf(w.charAt(0));
