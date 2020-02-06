@@ -44,7 +44,7 @@ Next, open the project with your preferred text editor or IDE and complete the a
 
 ```
 	git add .
-	git commit -m “Assignment Completed”
+	git commit -m “Assignment Completed” 
 	git push
 ```
 
