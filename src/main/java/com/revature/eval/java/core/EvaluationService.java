@@ -403,8 +403,26 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			char[] letters = string.toCharArray();
+			for(int i=0; i < letters.length; ++i) {
+				char c = letters[i]; // letters[i] is too verbose
+				boolean lowerCase = false;
+				if(c >= 'a' && c <= 'z') {
+					lowerCase = true;
+					c -= 32; // convert to upper case
+				}
+				if(c >= 'A' && c <= 'Z') {
+					c = (char) (c + key);
+					if(c > 'Z') {
+						c -= 26;
+					}
+					if(lowerCase) {
+						c += 32;
+					}
+					letters[i] = c;
+				}
+			}
+			return new String(letters);
 		}
 
 	}
