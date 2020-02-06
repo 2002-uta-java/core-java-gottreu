@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -443,8 +444,33 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		if(i < 1) { 
+			throw new IllegalArgumentException("i must be positive");
+		}
+		Vector<Integer> primes = new Vector<>();
+		primes.add(2);
+		int possiblePrime = 3;
+		while(primes.size() < i) {
+			if(isPrime(possiblePrime)) {
+				primes.add(possiblePrime);
+			}
+			possiblePrime += 2;
+		}
+		return primes.lastElement();
+	}
+		
+	private static boolean isPrime(int n) {
+		/* We're only passing odd numbers to isPrimes, so this first test
+		 * is redundant, but it seems unreasonable to have isPrime return invalid
+		 * results for some even numbers.
+		 */
+		if( n % 2 == 0) { return false; }
+		for(int i=3; i <= Math.sqrt(n); i+=2) {
+			if(n % i == 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
