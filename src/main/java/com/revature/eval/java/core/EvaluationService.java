@@ -1,7 +1,11 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -340,8 +344,20 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		long possibleFactor = 2;
+		List<Long> factors = new ArrayList<>();
+		if(l < 2) {
+			throw new IllegalArgumentException("parameter l must be greater than 1");
+		}
+		while(l > 1) {
+			if(l % possibleFactor == 0) {
+				l /= possibleFactor;
+				factors.add(possibleFactor);
+			} else {
+				++possibleFactor;
+			}
+		}
+		return factors;
 	}
 
 	/**
@@ -523,8 +539,19 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		HashSet<Integer> multiples = new HashSet<>();
+		for(int s: set) {
+			int m = s;
+			while(m < i) {
+				multiples.add(m);
+				m += s;
+			}
+		}
+		int sum = 0;
+		for(int m: multiples) {
+			sum += m;
+		}
+		return sum;
 	}
 
 	/**
@@ -564,8 +591,25 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isLuhnValid(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		boolean everyOther = false;
+		int sum = 0;
+		if(!string.matches("[\\s\\d]+")) {
+			return false;
+		}
+		List<String> digits = Arrays.asList(string.replaceAll("\\s", "").split(""));
+		Collections.reverse(digits);
+		for(String s: digits) {
+			int digit = Integer.valueOf(s);
+			if(everyOther) {
+				digit *= 2;
+				if(digit > 9) {
+					digit -= 9;
+				}
+			}
+			sum += digit;
+			everyOther = ! everyOther;
+		}
+		return (sum % 10) == 0;
 	}
 
 	/**
